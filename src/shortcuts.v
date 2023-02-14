@@ -46,7 +46,7 @@ shortcut.Description = "${params.description}"
 shortcut.WorkingDirectory = "${app_exe_location#[0..-os.file_name(app_exe_location).len]}"
 shortcut.Save')) or { return }
 		os.system("wscript.exe \"${vbs_file}\"")
-		//os.rm(vbs_file) or {}
+		os.rm(vbs_file) or {}
 	}
 	return
 }

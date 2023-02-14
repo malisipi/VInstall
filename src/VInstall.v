@@ -61,6 +61,8 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
                 if app.get_object_by_id("shortcut_app_menu")[0]["c"].bol {
                     make_shortcut(installer_data: app_data, location:.app_menu)
                     uninstaller_dat.shortcuts << "${path_app_menu}${app_data.parameters.app_name}.lnk"
+                    make_shortcut(installer_data: app_data, location:.app_menu, app_location:"uninstaller.exe", file_name:"${app_data.parameters.app_name} - Uninstall", description:"${app_data.parameters.app_name} - Uninstall Tool")
+                    uninstaller_dat.shortcuts << "${path_app_menu}${app_data.parameters.app_name} - Uninstall.lnk"
                 }
                 if app.get_object_by_id("shortcut_desktop")[0]["c"].bol {
                     make_shortcut(installer_data: app_data, location:.desktop)

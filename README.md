@@ -12,7 +12,8 @@ vinstall.run(
     app_name: "AppName",
     install_path:"C:/Program Files/MyAppName",
     license_txt: $embed_file('license.txt'),
-    app_zip: $embed_file('app.zip')
+    app_zip: $embed_file('app.zip'),
+    executable_path: "app.exe"
 )!
 ```
 
@@ -21,6 +22,7 @@ vinstall.run(
 * Integrate with V applications
 * Support Windows 7 & above
 * Single executable for distirbuting
+* Shortcut Support
 
 TODO:
 
@@ -28,7 +30,6 @@ TODO:
 * Uninstall Capabilities
 * Creation of registry (for Windows) and .INI entries
 * Support for passworded and encrypted installs
-* Shortcuts
 * Multilingual Support
     * Turkish
     * French

@@ -5,6 +5,7 @@ import szip
 import os
 import rand
 import v.embed_file
+import json
 
 pub struct InstallerParameters {
     app_developer       string                      = "unknown"
@@ -12,6 +13,7 @@ pub struct InstallerParameters {
     install_path        string                      = os.temp_dir()
     license_txt         embed_file.EmbedFileData    = embed_file.EmbedFileData {uncompressed:&[]u8{}}
     app_zip             embed_file.EmbedFileData    = embed_file.EmbedFileData {uncompressed:&[]u8{}}
+    uninstaller         embed_file.EmbedFileData    = embed_file.EmbedFileData {uncompressed:&[]u8{}}
     executable_path     string
     desktop_shortcut    bool
     app_menu_shortcut   bool
@@ -48,14 +50,29 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
                 os.rmdir_all(app_data.temp_folder) or {}
                 return
             }
-		if app_data.parameters.executable_path != "" {
-            if app.get_object_by_id("shortcut_app_menu")[0]["c"].bol {
-                make_shortcut(installer_data: app_data, location:.app_menu)
+            mut uninstaller_dat:=UninstallerData{
+                app_name: app_data.parameters.app_name,
+                install_path: app_data.user_decided_install_path,
+                files: os.ls(app_data.user_decided_install_path) or {[]string{}}
             }
-            if app.get_object_by_id("shortcut_desktop")[0]["c"].bol {
-                make_shortcut(installer_data: app_data, location:.desktop)
+            uninstaller_dat.files << "uninstall.dat"
+            os.write_file("${app_data.user_decided_install_path}/uninstall.dat", json.encode(uninstaller_dat)) or {
+                mui.messagebox("${app_data.parameters.app_name} - Installer", "Uninstaller data creation was failed", "ok", "warning")
+                println("")
             }
-		}
+            os.write_file("${app_data.user_decided_install_path}/uninstaller.exe", app_data.parameters.uninstaller.to_string()) or {
+                mui.messagebox("${app_data.parameters.app_name} - Installer", "Uninstaller creation was failed", "ok", "warning")
+                println("")
+            }
+
+            if app_data.parameters.executable_path != "" {
+                if app.get_object_by_id("shortcut_app_menu")[0]["c"].bol {
+                    make_shortcut(installer_data: app_data, location:.app_menu)
+                }
+                if app.get_object_by_id("shortcut_desktop")[0]["c"].bol {
+                    make_shortcut(installer_data: app_data, location:.desktop)
+                }
+            }
             mui.messagebox("${app_data.parameters.app_name} - Installer", "Installed!", "ok", "info")
             app.destroy()
         }
@@ -80,7 +97,7 @@ pub fn run(params InstallerParameters)!{
         mui.messagebox("${params.app_name} - Installer", "Unable to extract required files", "ok", "error") return
     }
 
-    mut app:=mui.create(title:"${params.app_name} - Installer", draw_mode:.system_native, app_data: &InstallerData{parameters:params, temp_file: temp_file, temp_folder: temp_folder})
+    mut app:=mui.create(title:"${params.app_name} - Installer", draw_mode:.system_native, ask_quit:true, app_data: &InstallerData{parameters:params, temp_file: temp_file, temp_folder: temp_folder})
     app.textarea(id:"license", x:50, y:50, width:"100%x -115", height: "100%y -180", text:params.license_txt.to_string())
     app.scrollbar(id:"license_scroll", x:"# 50", y:50, width:15, height: "100%y -180", connected_widget:app.get_object_by_id("license")[0], vertical:true)
     app.checkbox(id:"accept_license", x:50, y:"# 105", text:"I accept the license terms", width:20, height:20)

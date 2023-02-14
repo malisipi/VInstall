@@ -9,7 +9,6 @@
 * Instal (the) VInstall library `v install malisipi.VInstall`
 * And create some installers
 
-
 Basic Installer:
 
 ```v
@@ -53,7 +52,7 @@ TODO:
 
 ## Thanks to V-language for Mention
 
-[https://twitter.com/v_language/status/1625482422174228486](![V-language](./assets/vlang_mention.png))
+[![V-language](./assets/vlang_mention.png)](https://twitter.com/v_language/status/1625482422174228486)
 
 ## License
 

@@ -70,13 +70,15 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
                 }
             }
 
-            os.write_file("${app_data.user_decided_install_path}/uninstall.dat", json.encode(uninstaller_dat)) or {
-                mui.messagebox("${app_data.parameters.app_name} - Installer", "Uninstaller data creation was failed", "ok", "warning")
-                println("")
-            }
-            os.write_file("${app_data.user_decided_install_path}/uninstaller.exe", app_data.parameters.uninstaller.to_string()) or {
-                mui.messagebox("${app_data.parameters.app_name} - Installer", "Uninstaller creation was failed", "ok", "warning")
-                println("")
+            if app_data.parameters.uninstaller.to_string().len > 0 {
+                os.write_file("${app_data.user_decided_install_path}/uninstall.dat", json.encode(uninstaller_dat)) or {
+                    mui.messagebox("${app_data.parameters.app_name} - Installer", "Uninstaller data creation was failed", "ok", "warning")
+                    println("")
+                }
+                os.write_file("${app_data.user_decided_install_path}/uninstaller.exe", app_data.parameters.uninstaller.to_string()) or {
+                    mui.messagebox("${app_data.parameters.app_name} - Installer", "Uninstaller creation was failed", "ok", "warning")
+                    println("")
+                }
             }
             mui.messagebox("${app_data.parameters.app_name} - Installer", "Installed!", "ok", "info")
             app.destroy()

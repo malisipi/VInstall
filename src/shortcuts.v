@@ -2,6 +2,11 @@ module vinstall
 
 import os
 
+const (
+	path_desktop = '${os.getenv("USERPROFILE")}/Desktop/'
+	path_app_menu = '${os.getenv("AppData")}/Microsoft/Windows/Start Menu/Programs/'
+)
+
 pub struct ShortcutConfig {
 mut:
 	installer_data	InstallerData
@@ -33,9 +38,9 @@ pub fn make_shortcut(params ShortcutConfig){
 		file_name += ".lnk"
 		mut location := ""
 		if params.location == .desktop {
-			location = '${os.getenv("USERPROFILE")}/Desktop/'
+			location = path_desktop
 		} else {
-			location = '${os.getenv("AppData")}/Microsoft/Windows/Start Menu/Programs/'
+			location = path_app_menu
 		}
 		app_exe_location := "${params.installer_data.user_decided_install_path}/${app_location}"
 		vbs_file := "${os.temp_dir()}/installer_shortcut.vbs"

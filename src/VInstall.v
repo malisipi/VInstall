@@ -56,6 +56,18 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
                 files: os.ls(app_data.user_decided_install_path) or {[]string{}}
             }
             uninstaller_dat.files << "uninstall.dat"
+
+            if app_data.parameters.executable_path != "" {
+                if app.get_object_by_id("shortcut_app_menu")[0]["c"].bol {
+                    make_shortcut(installer_data: app_data, location:.app_menu)
+                    uninstaller_dat.shortcuts << "${path_app_menu}${app_data.parameters.app_name}.lnk"
+                }
+                if app.get_object_by_id("shortcut_desktop")[0]["c"].bol {
+                    make_shortcut(installer_data: app_data, location:.desktop)
+                    uninstaller_dat.shortcuts << "${path_desktop}${app_data.parameters.app_name}.lnk"
+                }
+            }
+
             os.write_file("${app_data.user_decided_install_path}/uninstall.dat", json.encode(uninstaller_dat)) or {
                 mui.messagebox("${app_data.parameters.app_name} - Installer", "Uninstaller data creation was failed", "ok", "warning")
                 println("")
@@ -63,15 +75,6 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
             os.write_file("${app_data.user_decided_install_path}/uninstaller.exe", app_data.parameters.uninstaller.to_string()) or {
                 mui.messagebox("${app_data.parameters.app_name} - Installer", "Uninstaller creation was failed", "ok", "warning")
                 println("")
-            }
-
-            if app_data.parameters.executable_path != "" {
-                if app.get_object_by_id("shortcut_app_menu")[0]["c"].bol {
-                    make_shortcut(installer_data: app_data, location:.app_menu)
-                }
-                if app.get_object_by_id("shortcut_desktop")[0]["c"].bol {
-                    make_shortcut(installer_data: app_data, location:.desktop)
-                }
             }
             mui.messagebox("${app_data.parameters.app_name} - Installer", "Installed!", "ok", "info")
             app.destroy()

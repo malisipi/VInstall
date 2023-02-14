@@ -3,13 +3,13 @@ module vinstall
 import mui
 import json
 import os
-import rand
 
 pub struct UninstallerData {
     app_name        string
     install_path    string
 mut:
     files           []string
+    shortcuts       []string
 }
 
 fn get_uninstall_dat()! UninstallerData {
@@ -22,10 +22,14 @@ pub fn uninstall() bool {
         return false
     }
     if mui.messagebox("${uninstaller_dat.app_name} - Uninstaller", "Do you want to uninstall?", "yesno", "warning") == 1 {
-        for file in uninstaller_dat.files {
+        for temp_file in uninstaller_dat.files {
+            file:="${uninstaller_dat.install_path}/${temp_file}"
             os.rm(file) or {
                 os.rmdir_all(file) or {}
             }
+        }
+        for file in uninstaller_dat.shortcuts {
+            os.rm(file) or {}
         }
         return true
     } else {

@@ -1,8 +1,16 @@
 # VInstall *- A Cross-Platform Installer Creator*
 
-![VInstall](./vinstall.png)
+![VInstall](./assets/vinstall.png)
 
 ## How to Use?
+
+* Get V compiler from [vlang.io](https://vlang.io/)
+* Install MUI library `v install malisipi.mui`
+* Instal (the) VInstall library `v install malisipi.VInstall`
+* And create some installers
+
+
+Basic Installer:
 
 ```v
 import malisipi.vinstall
@@ -23,11 +31,12 @@ vinstall.run(
 * Support Windows 7 & above
 * Single executable for distirbuting
 * Shortcut Support
+* Uninstall Capabilities
 
 TODO:
 
 * Linux/MacOS support
-* Uninstall Capabilities
+* Support downloading install file
 * Creation of registry (for Windows) and .INI entries
 * Support for passworded and encrypted installs
 * Multilingual Support
@@ -41,6 +50,10 @@ TODO:
 ## Thirdparty
 
 * [MUI](https://github.com/malisipi/mui) (UI-Library) - Licensed with Apache 2.0
+
+## Thanks to V-language for Mention
+
+[https://twitter.com/v_language/status/1625482422174228486](![V-language](./assets/vlang_mention.png))
 
 ## License
 

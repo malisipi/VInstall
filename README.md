@@ -31,20 +31,18 @@ vinstall.run(
 * Single executable for distirbuting
 * Shortcut Support
 * Uninstall Capabilities
+* Dark Mode Support
+* Multilingual Support (English / Turkish / Russian / German / French / Spanish)
+
+> Some translations was done with Translate. This translations can be missing as grammar and spelling. Let me know if a translation is wrong.
 
 TODO:
 
 * Linux/MacOS support
+* Portable install support
 * Support downloading install file
 * Creation of registry (for Windows) and .INI entries
 * Support for passworded and encrypted installs
-* Multilingual Support
-    * Turkish
-    * French
-    * Spanish
-    * Russian
-    * German
-    * and other languages...
 
 ## Thirdparty
 

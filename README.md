@@ -8,6 +8,7 @@
 * Install MUI library `v install malisipi.mui`
 * Instal (the) VInstall library `v install malisipi.VInstall`
 * And create some installers
+* Resource file support
 
 Basic Installer:
 
@@ -55,3 +56,4 @@ TODO:
 ## License
 
 * This library licensed with Apache License 2.0.
+* Also `assets/Icons` licensed with Apache License 2.0.

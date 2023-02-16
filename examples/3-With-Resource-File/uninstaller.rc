@@ -1,0 +1,26 @@
+101 ICON "../../assets/Icons/uninstaller.ico"
+
+
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904E4"
+    BEGIN
+      VALUE "CompanyName", "CompanyName"
+      VALUE "FileDescription", "AppName - Uninstaller"
+      VALUE "FileVersion", "1.0"
+      VALUE "InternalName", "AppName - Uninstaller"
+      VALUE "LegalCopyright", "© CopyRight Info"
+      VALUE "OriginalFilename", "uninstaller.exe"
+      VALUE "ProductName", "AppName - Uninstaller"
+      VALUE "ProductVersion", "1.0"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x041F, 0x4E4
+  END
+END

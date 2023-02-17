@@ -2,11 +2,6 @@ module vinstall
 
 import os
 
-const (
-	path_desktop = '${os.getenv("USERPROFILE")}/Desktop/'
-	path_app_menu = '${os.getenv("AppData")}/Microsoft/Windows/Start Menu/Programs/'
-)
-
 pub struct ShortcutConfig {
 mut:
 	installer_data	InstallerData

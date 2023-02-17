@@ -25,10 +25,20 @@ fn get_uninstall_dat()! UninstallerData {
 
 pub fn uninstall() bool {
     uninstaller_dat := get_uninstall_dat() or {
-        C.MessageBoxW(C.NULL, "uninstall.dat not found!".to_wide(), "Uninstaller".to_wide(), C.MB_ICONERROR | C.MB_OK | C.MB_DEFBUTTON1 | C.MB_TOPMOST)
+    	$if windows {
+	        C.MessageBoxW(C.NULL, "uninstall.dat not found!".to_wide(), "Uninstaller".to_wide(), C.MB_ICONERROR | C.MB_OK | C.MB_DEFBUTTON1 | C.MB_TOPMOST)
+	}
+	$if !windows {
+		println("uninstall.dat not found!")
+	}
         return false
     }
-    if C.MessageBoxW(C.NULL, uninstaller_dat.limited_translation.ask_uninstall.to_wide(), "${uninstaller_dat.app_name} - ${uninstaller_dat.limited_translation.uninstaller}".to_wide(), C.MB_ICONWARNING | C.MB_YESNO | C.MB_DEFBUTTON2 | C.MB_TOPMOST) == C.IDYES {
+    uninstall := $if windows {
+        C.MessageBoxW(C.NULL, uninstaller_dat.limited_translation.ask_uninstall.to_wide(), "${uninstaller_dat.app_name} - ${uninstaller_dat.limited_translation.uninstaller}".to_wide(), C.MB_ICONWARNING | C.MB_YESNO | C.MB_DEFBUTTON2 | C.MB_TOPMOST) == C.IDYES
+    } $else {
+        true
+    }
+    if uninstall{
         for temp_file in uninstaller_dat.files {
             file:="${uninstaller_dat.install_path}/${temp_file}"
             os.rm(file) or {

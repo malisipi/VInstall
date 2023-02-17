@@ -2,6 +2,7 @@ module vinstall
 
 import json
 import os
+import mui
 
 struct LimitedTranslation{
     uninstaller   string
@@ -29,14 +30,14 @@ pub fn uninstall() bool {
 	        C.MessageBoxW(C.NULL, "uninstall.dat not found!".to_wide(), "Uninstaller".to_wide(), C.MB_ICONERROR | C.MB_OK | C.MB_DEFBUTTON1 | C.MB_TOPMOST)
 	}
 	$if !windows {
-		println("uninstall.dat not found!")
+		mui.messagebox("Uninstaller",  "uninstall.dat not found!", "ok", "warning")
 	}
         return false
     }
     uninstall := $if windows {
         C.MessageBoxW(C.NULL, uninstaller_dat.limited_translation.ask_uninstall.to_wide(), "${uninstaller_dat.app_name} - ${uninstaller_dat.limited_translation.uninstaller}".to_wide(), C.MB_ICONWARNING | C.MB_YESNO | C.MB_DEFBUTTON2 | C.MB_TOPMOST) == C.IDYES
     } $else {
-        true
+        mui.messagebox("${uninstaller_dat.app_name} - ${uninstaller_dat.limited_translation.uninstaller}",  uninstaller_dat.limited_translation.ask_uninstall, "yesno", "warning")==1
     }
     if uninstall{
         for temp_file in uninstaller_dat.files {

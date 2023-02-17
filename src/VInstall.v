@@ -54,7 +54,7 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
 		        return
 		    }
             } $else {
-                    os.mkdir(app_data.user_decided_install_path) or {}
+                    os.mkdir_all(app_data.user_decided_install_path) or {}
 		    szip.extract_zip_to_dir(app_data.temp_file, app_data.user_decided_install_path) or {
 		        mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.install_file_corrupt, "ok", "error")
 		        return
@@ -70,17 +70,17 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
                 }
             }
             uninstaller_dat.files << "uninstall.dat"
+            $if !windows {
+            	uninstaller_dat.files << "uninstaller.${executable_ext}"
+            }
 
             if app_data.parameters.executable_path != "" {
                 if app.get_object_by_id("shortcut_app_menu")[0]["c"].bol {
-                    make_shortcut(installer_data: app_data, location:.app_menu)
-                    uninstaller_dat.shortcuts << "${path_app_menu}${app_data.parameters.app_name}.lnk"
-                    make_shortcut(installer_data: app_data, location:.app_menu, app_location:"uninstaller.exe", file_name:"${app_data.parameters.app_name} - ${app_data.active_language_pack.uninstaller}", description:"${app_data.parameters.app_name} - ${app_data.active_language_pack.uninstaller}")
-                    uninstaller_dat.shortcuts << "${path_app_menu}${app_data.parameters.app_name} - ${app_data.active_language_pack.uninstaller}.lnk"
+                    uninstaller_dat.shortcuts << make_shortcut(installer_data: app_data, location:.app_menu)
+                    uninstaller_dat.shortcuts << make_shortcut(installer_data: app_data, location:.app_menu, app_location:"uninstaller.${executable_ext}", file_name:"${app_data.parameters.app_name} - ${app_data.active_language_pack.uninstaller}", description:"${app_data.parameters.app_name} - ${app_data.active_language_pack.uninstaller}")
                 }
                 if app.get_object_by_id("shortcut_desktop")[0]["c"].bol {
-                    make_shortcut(installer_data: app_data, location:.desktop)
-                    uninstaller_dat.shortcuts << "${path_desktop}${app_data.parameters.app_name}.lnk"
+                    uninstaller_dat.shortcuts << make_shortcut(installer_data: app_data, location:.desktop)
                 }
             }
 
@@ -89,12 +89,15 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
                     mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.uninstall_dat_error, "ok", "warning")
                     println("")
                 }
-                os.write_file("${app_data.user_decided_install_path}/uninstaller.exe", app_data.parameters.uninstaller.to_string()) or {
+                os.write_file("${app_data.user_decided_install_path}/uninstaller.${executable_ext}", app_data.parameters.uninstaller.to_string()) or {
                     mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.uninstall_exe_error, "ok", "warning")
                     println("")
                 }
+                $if !windows {
+                    os.chmod("${app_data.user_decided_install_path}/uninstaller.${executable_ext}", 0o755) or { println("Failed uninstaller runable") }
+                }
             }
-            mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", "Installed!", "ok", "info")
+            mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", "${app_data.active_language_pack.installed}", "ok", "info")
             app.destroy()
         }
     }

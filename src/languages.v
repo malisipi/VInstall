@@ -3,7 +3,7 @@ module vinstall
 import mui
 
 pub const (
-	supported_languages = ["English", "Turkish", "Russian", "German", "French", "Spanish"]
+	supported_languages = ["English", "French", "German", "Russian", "Spanish", "Turkish"]
 	translation_english = Translation{}
 	translation_turkish = Translation{
 		accept_license			: "Lisans şartlarını kabul ediyorum"

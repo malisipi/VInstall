@@ -31,7 +31,7 @@ fn get_path_app_menu() string {
 		if !is_root {
 			'${os.getenv("HOME")}/.local/share/applications'
 		} else {
-			'/usr/share/local'
+			'/usr/share/applications'
 		}
 	}
 }

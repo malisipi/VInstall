@@ -19,6 +19,8 @@ mut:
     shortcuts       []string
 }
 
+fn C.MessageBoxW(int, &u16, &u16, int) int
+
 fn get_uninstall_dat()! UninstallerData {
     return json.decode(UninstallerData, os.read_file(os.abs_path("uninstall.dat"))or{"."})!
 }
@@ -44,7 +46,7 @@ pub fn uninstall() bool {
                 C.SW_SHOWNORMAL  
             )
         } $else {
-            //TODO: linux code
+            os.system('pkexec env DISPLAY=\$DISPLAY XAUTHORITY=\$XAUTHORITY bash -c \'cd "${uninstaller_dat.install_path}" && "${uninstaller_dat.install_path}/uninstaller.out"\'')
         }
         exit(0)
         return false

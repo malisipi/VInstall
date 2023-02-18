@@ -97,6 +97,7 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
                 $if !windows {
                     os.chmod("${app_data.user_decided_install_path}/uninstaller.${executable_ext}", 0o755) or {
                         mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.uninstall_exe_error, "ok", "warning")
+                        println("")
                     }
                 }
             }

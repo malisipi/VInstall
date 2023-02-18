@@ -17,7 +17,20 @@ pub enum ShortcutLocation {
 }
 
 fn utf8_to_ascii(utf8 string) string {
-	return utf8.replace("ı",'"& Chr(253) &"').replace("ş",'"& Chr(254) &"').replace("İ",'"& Chr(221) &"').replace("Ş",'"& Chr(222) &"').replace("ğ",'"& Chr(240) &"').replace("Ğ",'"& Chr(208) &"').replace("ç",'"& Chr(231) &"').replace("Ç",'"& Chr(199) &"').replace("ö",'"& Chr(246) &"').replace("Ö",'"& Chr(214) &"').replace("ü",'"& Chr(252) &"').replace("Ü",'"& Chr(220) &"')
+	return utf8.replace("ı",'"& Chr(253) &"')
+		.replace("ş",'"& Chr(254) &"')
+		.replace("İ",'"& Chr(221) &"')
+		.replace("Ş",'"& Chr(222) &"')
+		.replace("ğ",'"& Chr(240) &"')
+		.replace("Ğ",'"& Chr(208) &"')
+		.replace("ç",'"& Chr(231) &"')
+		.replace("Ç",'"& Chr(199) &"')
+		.replace("ö",'"& Chr(246) &"')
+		.replace("Ö",'"& Chr(214) &"')
+		.replace("ü",'"& Chr(252) &"')
+		.replace("Ü",'"& Chr(220) &"')
+		.replace("é",'"& Chr(233) &"')
+		.replace("É",'"& Chr(201) &"')
 }
 
 pub fn make_shortcut(params ShortcutConfig) string {

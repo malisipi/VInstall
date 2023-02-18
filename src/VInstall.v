@@ -43,24 +43,25 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
                 }
             }
             $if windows { //unicode file path bug on Windows by szip
-            	    os.mkdir(app_data.temp_folder) or {}
-		    szip.extract_zip_to_dir(app_data.temp_file, app_data.temp_folder) or {
-		        mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.install_file_corrupt, "ok", "error")
-		        return
-		    }
-		    os.mv(app_data.temp_folder, app_data.user_decided_install_path) or {
-		        mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.readonly_error, "ok", "error")
-		        os.rmdir_all(app_data.temp_folder) or {}
-		        return
-		    }
+            	os.mkdir(app_data.temp_folder) or {}
+                szip.extract_zip_to_dir(app_data.temp_file, app_data.temp_folder) or {
+                    mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.install_file_corrupt, "ok", "error")
+                    return
+                }
+                os.mv(app_data.temp_folder, app_data.user_decided_install_path) or {
+                    mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.readonly_error, "ok", "error")
+                    os.rmdir_all(app_data.temp_folder) or {}
+                    return
+		        }
             } $else {
-                    os.mkdir_all(app_data.user_decided_install_path) or {}
-		    szip.extract_zip_to_dir(app_data.temp_file, app_data.user_decided_install_path) or {
-		        mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.install_file_corrupt, "ok", "error")
-		        return
-		    }
+                os.mkdir_all(app_data.user_decided_install_path) or {}
+                szip.extract_zip_to_dir(app_data.temp_file, app_data.user_decided_install_path) or {
+                    mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.install_file_corrupt, "ok", "error")
+                    return
+                }
             }
             mut uninstaller_dat:=UninstallerData{
+                is_root: is_root
                 app_name: app_data.parameters.app_name,
                 install_path: app_data.user_decided_install_path,
                 files: os.ls(app_data.user_decided_install_path) or {[]string{}}
@@ -94,7 +95,9 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
                     println("")
                 }
                 $if !windows {
-                    os.chmod("${app_data.user_decided_install_path}/uninstaller.${executable_ext}", 0o755) or { println("Failed uninstaller runable") }
+                    os.chmod("${app_data.user_decided_install_path}/uninstaller.${executable_ext}", 0o755) or {
+                        mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.uninstall_exe_error, "ok", "warning")
+                    }
                 }
             }
             mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", "${app_data.active_language_pack.installed}", "ok", "info")

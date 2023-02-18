@@ -20,7 +20,7 @@ fn get_is_root() bool {
 	return $if linux {
 		C.geteuid() == 0
 	} $else {
-		false
+		os.execute("C:/Windows/system32/cacls.exe C:/Windows/system32/config/system").exit_code==0
 	}
 }
 
@@ -38,7 +38,11 @@ fn get_path_app_menu() string {
 
 fn get_path_program_files() string {
 	return $if windows {
-		"C:/Program Files"
+		if is_root {
+			"C:/Program Files"
+		} else {
+			'${os.getenv("LocalAppData")}/Programs'.replace("\\","/")
+		}
 	} $else {
 		if is_root {
 			"/opt"

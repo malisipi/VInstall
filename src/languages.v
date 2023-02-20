@@ -3,7 +3,7 @@ module vinstall
 import mui
 
 pub const (
-	supported_languages = ["English", "Turkish", "Russian", "German", "French", "Spanish"]
+	supported_languages = ["English", "French", "German", "Russian", "Spanish", "Turkish"]
 	translation_english = Translation{}
 	translation_turkish = Translation{
 		accept_license			: "Lisans şartlarını kabul ediyorum"
@@ -57,19 +57,19 @@ pub const (
 		ask_uninstall			: "Möchten Sie deinstallieren?"
 	}
 	translation_french = Translation{
-		accept_license			: "J'accepte les conditions d'utilisation"
+		accept_license			: "J`accepte les conditions d`utilisation"
 		select_folder			: "Sélectionner le dossier"
 		install					: "Installer"
 		installer				: "Installateur"
-		shortcut_app_menu		: "Raccourci du menu de l'application"
+		shortcut_app_menu		: "Raccourci du menu de l`application"
 		shortcut_desktop		: "Raccourci de bureau"
 		app_info				: "%app de %developer"
-		require_accept_license	: "Vous devez accepter les termes de la licence avant l'installation"
+		require_accept_license	: "Vous devez accepter les termes de la licence avant l`installation"
 		uninstall_dat_error		: "La création des données du programme de désinstallation a échoué"
 		uninstall_exe_error		: "La création du programme de désinstallation a échoué"
-		readonly_error			: "Vous avez besoin d'une autorisation pour installer le chemin,\n* Exécuter en tant qu'administrateur\n* Installer le dossier non en lecture seule"
-		install_file_corrupt	: "Le fichier d'installation a été corrompu"
-		uninstaller				: "Programme de desinstallation"//"Programme de désinstallation"
+		readonly_error			: "Vous avez besoin d``une autorisation pour installer le chemin,\n* Exécuter en tant qu`administrateur\n* Installer le dossier non en lecture seule"
+		install_file_corrupt	: "Le fichier d`installation a été corrompu"
+		uninstaller				: "Programme de désinstallation"
 		installed				: "Installé!"
 		ask_uninstall			: "Voulez-vous désinstaller?"
 	}

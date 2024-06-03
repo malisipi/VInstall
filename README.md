@@ -28,7 +28,8 @@ vinstall.run(
 ## Properties
 
 * Integrate with V applications
-* Support Windows 7 & above
+* Support for Windows 7 & above
+* Support for Linux
 * Single executable for distirbuting
 * Shortcut Support
 * Uninstall Capabilities
@@ -39,7 +40,7 @@ vinstall.run(
 
 TODO:
 
-* Linux/MacOS support
+* MacOS support
 * Portable install support
 * Support downloading install file
 * Creation of registry (for Windows) and .INI entries

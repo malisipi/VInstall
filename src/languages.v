@@ -3,7 +3,11 @@ module vinstall
 import mui
 
 pub const (
-	supported_languages = ["English", "French", "German", "Russian", "Spanish", "Turkish"]
+	supported_languages = $if extended_language_support? {
+			["English", "French", "German", "Russian", "Spanish", "Turkish", "Chinese"]
+		} $else {
+			["English", "French", "German", "Russian", "Spanish", "Turkish"]
+		}
 	translation_english = Translation{}
 	translation_turkish = Translation{
 		accept_license			: "Lisans şartlarını kabul ediyorum"
@@ -90,6 +94,23 @@ pub const (
 		installed				: "¡Instalado!"
 		ask_uninstall			: "¿Quieres desinstalar?"
 	}
+	translation_chinese = Translation{
+		accept_license			: "我接受许可条款"
+		select_folder			: "选择文件夹"
+		install					: "安装"
+		installer				: "安装程序"
+		shortcut_app_menu		: "应用程序菜单快捷方式"
+		shortcut_desktop		: "桌面快捷方式"
+		app_info				: "来自 %developer 的 %app"
+		require_accept_license	: "您需要在安装前接受许可条款"
+		uninstall_dat_error		: "卸载程序数据创建失败"
+		uninstall_exe_error		: "卸载程序创建失败"
+		readonly_error			: "您需要权限才能安装路径\n* 以管理员身份运行\n* 安装非只读文件夹"
+		install_file_corrupt	: "安装文件已损坏"
+		uninstaller				: "卸载程序"
+		installed				: "已安装！"
+		ask_uninstall			: "您要卸载吗？"
+	}
 )
 
 pub struct Translation {
@@ -124,6 +145,8 @@ fn change_language (event_details mui.EventDetails, mut app &mui.Window, mut app
 			translation_french
 		} "Spanish" {
 			translation_spanish
+		} "Chinese" {
+			translation_chinese
 		} else {
 			translation_english
 		}

@@ -6,6 +6,7 @@ import os
 import rand
 import v.embed_file
 import json
+import os.font
 
 pub struct InstallerParameters {
     app_developer       string                      = "unknown"
@@ -129,10 +130,18 @@ pub fn run(params InstallerParameters)!{
         mui.messagebox("${params.app_name} - Installer", "Unable to extract required files", "ok", "error") return
     }
 
+    mut application_font := font.default()
     mut app_data := InstallerData{parameters:params, temp_file: temp_file, temp_folder: temp_folder}
-    mut app := mui.create(title:"${params.app_name} - Installer", draw_mode:.system_native, ask_quit:true, app_data: &app_data, init_fn: fn (event_details mui.EventDetails, mut app &mui.Window, mut app_data InstallerData){
+    
+    $if extended_language_support? {
+	    application_font=os.temp_dir()+"/noto_sc.ttf"
+	    os.write_file(application_font, $embed_file("../fonts/noto_sc.ttf").to_string()) or {}
+    }
+    
+    mut app := mui.create(title:"${params.app_name} - Installer", draw_mode:.system_native, ask_quit:true, app_data: &app_data, font:application_font, init_fn: fn (event_details mui.EventDetails, mut app &mui.Window, mut app_data InstallerData){
     	change_language(mui.EventDetails{value:app_data.parameters.default_language}, mut app, mut app_data) //load default language
     })
+    
     app.selectbox(id:"language", x:"# 20", y:20, width:120, height:20 list: supported_languages, onchange: change_language, text:params.default_language)
     app.textarea(id:"license", x:50, y:50, width:"100%x -115", height: "100%y -180", text:params.license_txt.to_string())
     app.scrollbar(id:"license_scroll", x:"# 50", y:50, width:15, height: "100%y -180", connected_widget:app.get_object_by_id("license")[0], vertical:true)

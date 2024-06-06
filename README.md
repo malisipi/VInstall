@@ -34,9 +34,13 @@ vinstall.run(
 * Shortcut Support
 * Uninstall Capabilities
 * Dark Mode Support
-* Multilingual Support (English / Turkish / Russian / German / French / Spanish)
+* Multilingual Support (English / Turkish / Russian / German / French / Spanish / Chinese)
 
 > Some translations was done with Translate. This translations can be missing as grammar and spelling. Let me know if a translation is wrong.
+
+Note: You need to add "-d extended_language_support" flag to support Chinese. Some of operating systems will not have Chinese font, so font must be included into installer however it will make larger the installer. So the choose was gived to developer.
+
+Note: To make the installer smaller, you can compress them with UPX.
 
 TODO:
 

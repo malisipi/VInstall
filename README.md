@@ -38,9 +38,9 @@ vinstall.run(
 
 > Some translations was done with Translate. This translations can be missing as grammar and spelling. Let me know if a translation is wrong.
 
-Note: You need to add "-d extended_language_support" flag to support Chinese. Some of operating systems will not have Chinese font, so font must be included into installer however it will make larger the installer. So the choose was gived to developer.
+Note: You need to add `-d extended_language_support` flag to support Chinese. Some of operating systems will not have Chinese font, so font must be included into installer however it will make larger the installer. So the choose was gived to developer.
 
-Note: If you need to save files at installation location, you need to add "-d dont_delete_install_location_files". Also it's not recommend to use VInstall' Uninstaller, it will wipe entire folder that you chosed as installation location.
+Note: If you need to save files at installation location, you need to add `-d dont_delete_install_location_files`. Also it's not recommend to use VInstall' Uninstaller, it will wipe entire folder that you chosed as installation location.
 
 Note: To make the installer smaller, you can compress them with UPX.
 

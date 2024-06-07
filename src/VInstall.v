@@ -38,9 +38,11 @@ fn install(event_details mui.EventDetails, mut app &mui.Window, mut app_data Ins
         } else {
             app_data.user_decided_install_path = app.get_object_by_id("install_path")[0]["text"].str.replace("\0","")
             if os.exists(app_data.user_decided_install_path){
+            	$if !dont_delete_install_location_files? {
                 os.rmdir_all(app_data.user_decided_install_path) or {
                     mui.messagebox("${app_data.parameters.app_name} - ${app_data.active_language_pack.installer}", app_data.active_language_pack.readonly_error, "ok", "error")
                     return
+                }
                 }
             }
             $if windows { //unicode file path bug on Windows by szip
